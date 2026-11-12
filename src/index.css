@@ -1,0 +1,600 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-canvas: var(--bg-canvas);
+  --color-surface: var(--bg-surface);
+  --color-subtle: var(--bg-subtle);
+  --color-inverse: var(--bg-inverse);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-cobalt: var(--accent-cobalt);
+  --color-lime: var(--accent-cobalt);
+
+  --font-display: var(--font-display);
+  --font-wide: var(--font-display);
+  --font-editorial: var(--font-editorial);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-poppins: var(--font-poppins);
+  --font-jakarta: var(--font-jakarta);
+}
+
+@layer base {
+  :root {
+    --bg-canvas: #FFFFFF;
+    --bg-surface: #FAFAFA;
+    --bg-subtle: #F3F3F1;
+    --bg-inverse: #171C19;
+
+    --text-primary: #171C19;
+    --text-secondary: #484643;
+    --text-muted: #7E7B74;
+    --text-inverse: #F8F8F6;
+
+    --border-subtle: rgba(23, 28, 25, 0.09);
+    --border-strong: rgba(23, 28, 25, 0.22);
+    --border-inverse: rgba(255, 255, 255, 0.12);
+
+    /* Vibrant signature primary emerald teal accent */
+    --accent-cobalt: #087F5B;
+    --accent-cobalt-hover: #066146;
+    --accent-cobalt-glow: rgba(8, 127, 91, 0.35);
+
+    /* Font System: Crisp, proportional, un-squashed */
+    --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-wide: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-editorial: 'Playfair Display', Georgia, serif;
+    --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-poppins: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-jakarta: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .dark {
+    --bg-canvas: #171C19;
+    --bg-surface: #1E2521;
+    --bg-subtle: #242D28;
+    --bg-inverse: #F8F8F6;
+
+    --text-primary: #F8F8F6;
+    --text-secondary: #C8C6C0;
+    --text-muted: #8E8B84;
+    --text-inverse: #171C19;
+
+    --border-subtle: rgba(255, 255, 255, 0.10);
+    --border-strong: rgba(255, 255, 255, 0.25);
+    --border-inverse: rgba(23, 28, 25, 0.12);
+
+    --accent-cobalt: #087F5B;
+    --accent-cobalt-hover: #099268;
+    --accent-cobalt-glow: rgba(8, 127, 91, 0.40);
+  }
+
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    scroll-behavior: auto;
+    /* Handled by Lenis */
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    touch-action: manipulation;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.04em;
+  }
+
+  .font-editorial-italic {
+    font-family: var(--font-editorial);
+    font-style: italic;
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-wide {
+    font-family: var(--font-wide);
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .font-poppins {
+    font-family: var(--font-poppins);
+  }
+
+  /* Core utility fallbacks ensuring seamless theme variables support */
+  .bg-canvas {
+    background-color: var(--bg-canvas) !important;
+  }
+
+  .bg-surface {
+    background-color: var(--bg-surface) !important;
+  }
+
+  .bg-subtle {
+    background-color: var(--bg-subtle) !important;
+  }
+
+  .bg-primary {
+    background-color: var(--text-primary) !important;
+  }
+
+  .text-primary {
+    color: var(--text-primary) !important;
+  }
+
+  .text-secondary {
+    color: var(--text-secondary) !important;
+  }
+
+  .text-muted {
+    color: var(--text-muted) !important;
+  }
+}
+
+/* Custom Film Grain Texture */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.dark .grain-overlay {
+  opacity: 0.035;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.25);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cobalt);
+}
+
+/* =========================================================================
+   SIGNATURE BUTTONS (Pill Buttons matching reference image)
+   ========================================================================= */
+
+/* Primary Pill Button: [ LET'S CHAT ] style */
+.btn-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2.2rem;
+  border-radius: 9999px;
+  background-color: #087F5B;
+  color: #FFFFFF;
+  font-family: var(--font-poppins);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 24px rgba(8, 127, 91, 0.35);
+  transition: all 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  cursor: pointer;
+}
+
+.btn-pill-primary:hover {
+  background-color: #066146;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(8, 127, 91, 0.45);
+}
+
+.btn-pill-primary:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Primary White Pill Button: [ BOOK A CALL ] style */
+.btn-pill-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2.2rem;
+  border-radius: 9999px;
+  background-color: #FFFFFF;
+  color: #171C19;
+  font-family: var(--font-poppins);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  transition: all 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  cursor: pointer;
+}
+
+.btn-pill-white:hover {
+  background-color: #171C19;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.btn-pill-white:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Secondary Dark/Light Pill Button */
+.btn-pill-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.8rem;
+  border-radius: 9999px;
+  background-color: #171C19;
+  color: #FFFFFF;
+  font-family: var(--font-poppins);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: all 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+.dark .btn-pill-secondary {
+  background-color: #FFFFFF;
+  color: #171C19;
+}
+
+.btn-pill-secondary:hover {
+  background-color: #087F5B;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(8, 127, 91, 0.3);
+}
+
+.dark .btn-pill-secondary:hover {
+  background-color: #087F5B;
+  color: #FFFFFF;
+}
+
+/* Outline Mode Pill Button: [ 🪄 CHANGE THE MODE ] style */
+.btn-pill-mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(8, 8, 8, 0.16);
+  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--text-primary);
+  font-family: var(--font-poppins);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+.dark .btn-pill-mode {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(23, 28, 25, 0.85);
+}
+
+.btn-pill-mode:hover {
+  border-color: #087F5B;
+  color: #087F5B;
+  transform: translateY(-1px);
+}
+
+/* Pill stickers in the signature green section */
+.sticker-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1.65rem;
+  border-radius: 9999px;
+  background-color: #FFFFFF;
+  color: #171C19;
+  font-size: 0.88rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.sticker-pill:active {
+  cursor: grabbing;
+}
+
+/* Lenis smooth scrolling standard */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* =========================================================================
+   SIGNATURE STREETWEAR / EDITORIAL BRUTALIST AESTHETIC
+   Re-imagined with Signature Primary Accent (#087F5B)
+   ========================================================================= */
+
+/* Signature Accent Pill Button */
+.btn-pill-lime,
+.btn-pill-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 2rem;
+  border-radius: 9999px;
+  background-color: #087F5B;
+  color: #FFFFFF !important;
+  font-family: var(--font-poppins);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 24px rgba(8, 127, 91, 0.35);
+  transition: all 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-pill-lime:hover,
+.btn-pill-blue:hover {
+  background-color: #066146;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(8, 127, 91, 0.5);
+}
+
+.btn-pill-lime:active,
+.btn-pill-blue:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Dark Circular Action Pill (the ↗ button in Photo 2) */
+.btn-circle-action {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background-color: #171C19;
+  color: #087F5B;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+.btn-circle-action:hover {
+  background-color: #087F5B;
+  color: #FFFFFF;
+  border-color: #087F5B;
+  transform: scale(1.08) rotate(45deg);
+  box-shadow: 0 0 20px rgba(8, 127, 91, 0.45);
+}
+
+/* Photo 1: High-Contrast Highlighter Block Marker (Primary Accent, never gepeng) */
+.highlight-block-lime,
+.highlight-block-blue {
+  background-color: #087F5B;
+  color: #FFFFFF !important;
+  display: inline-block;
+  padding: 0.12em 0.38em;
+  border-radius: 0.25rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Photo 2: Signature Prompt / Search Pill in Primary Accent */
+.prompt-pill-lime,
+.prompt-pill-blue {
+  background-color: #087F5B;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  padding: 0.65rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 18px rgba(8, 127, 91, 0.28);
+  user-select: none;
+}
+
+/* Subtle Technical Grid in Primary Accent */
+.bg-grid-lime,
+.bg-grid-blue {
+  background-size: 26px 26px;
+  background-image:
+    linear-gradient(to right, rgba(8, 127, 91, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(8, 127, 91, 0.12) 1px, transparent 1px);
+}
+
+.bg-grid-subtle-dark {
+  background-size: 24px 24px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Slow continuous rotation for circular streetwear stamps */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Audio Player Equalizer Bars Animation */
+@keyframes musicBar1 {
+
+  0%,
+  100% {
+    height: 4px;
+  }
+
+  50% {
+    height: 14px;
+  }
+}
+
+@keyframes musicBar2 {
+
+  0%,
+  100% {
+    height: 13px;
+  }
+
+  50% {
+    height: 4px;
+  }
+}
+
+@keyframes musicBar3 {
+
+  0%,
+  100% {
+    height: 6px;
+  }
+
+  50% {
+    height: 14px;
+  }
+}
+
+.animate-music-bar-1 {
+  animation: musicBar1 0.75s ease-in-out infinite;
+}
+
+.animate-music-bar-2 {
+  animation: musicBar2 0.6s ease-in-out infinite;
+}
+
+.animate-music-bar-3 {
+  animation: musicBar3 0.85s ease-in-out infinite;
+}
+
+/* Typewriter Caret Cursor Animation */
+@keyframes typewriterBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  animation: typewriterBlink 0.8s infinite;
+}
+
+/* =========================================================================
+   MOBILE TOUCH & ERGONOMICS (Pure mobile additions, 0 desktop regressions)
+   ========================================================================= */
+
+/* Mobile Touch Target Standards (Fitts' Law >= 44px) */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hide scrollbars smoothly for horizontal mobile swipe containers */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glowing live status dot */
+@keyframes mobilePulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(8, 127, 91, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(8, 127, 91, 0);
+  }
+}
+
+.mobile-status-glow {
+  animation: mobilePulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
